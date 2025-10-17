@@ -1,14 +1,14 @@
 using UnityEngine;
 
 public class GridDraw : MonoBehaviour {
-    public Vector2Int gridSize;
-    public Vector2 cellSize; 
-    public GameObject center;
-    public Vector3 anchor; 
+    [SerializeField] private Vector2Int gridSize;
+    [SerializeField] private Vector2 cellSize; 
+    [SerializeField] private GameObject center;
+    [SerializeField] Vector3 anchor;
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.green;
-        AnchorUpdate();
+        anchor = AnchorUpdate();
 
         for (int x = 0; x < gridSize.x; x++) {
             for (int y = 0; y < gridSize.y; y++) {
@@ -21,20 +21,19 @@ public class GridDraw : MonoBehaviour {
     }
 
     
-    private void AnchorUpdate() {
+    private Vector3 AnchorUpdate() {
         float totalWidth = gridSize.x * cellSize.x;
         float totalHeight = gridSize.y * cellSize.y;
-        anchor = center.transform.position - new Vector3(totalWidth / 2, totalHeight / 2, 0);
+        return center.transform.position - new Vector3(totalWidth / 2, totalHeight / 2, 0);
     }
 
     private void OnMouseDown() {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
 
-        AnchorUpdate();
+        anchor = AnchorUpdate();
 
         Vector2Int gridPos = ConvertToGrid(mousePos);
-
         Debug.Log($"Ô được click: {gridPos}");
     }
 
