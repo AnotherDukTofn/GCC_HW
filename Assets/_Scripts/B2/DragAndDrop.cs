@@ -28,6 +28,7 @@ public class DragAndDrop : MonoBehaviour {
 
         }
         else {
+            // reset về tâm của object cha
             visual.transform.position = Vector3.zero;
         }
 
