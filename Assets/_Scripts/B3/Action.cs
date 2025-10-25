@@ -8,6 +8,8 @@ public class Action : MonoBehaviour {
 
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float jumpForce = 10f;
+    public bool onGround;
 
     [Header("Punch Settings")]
     [SerializeField] private float punchPower = 10f;
@@ -25,6 +27,7 @@ public class Action : MonoBehaviour {
 
     private void Update() {
         Move();
+        onGround = Grounded();
     }
 
     // --- Input Callbacks ---
@@ -53,5 +56,17 @@ public class Action : MonoBehaviour {
             Vector2 forceDir = (col.transform.position - transform.position).normalized;
             col.GetComponent<Rigidbody2D>().AddForce(forceDir * punchPower, ForceMode2D.Impulse);
         }
+    }
+
+    public void OnJump(InputAction.CallbackContext ctx) {
+        if (onGround) Jump();
+    }
+
+    private void Jump() {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+    }
+
+    private bool Grounded() {
+        return Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y - 0.25f), 0.5f, LayerMask.GetMask("Ground"));
     }
 }
