@@ -7,6 +7,7 @@ TagManager:
   - ItemSlot
   - Enemy
   - Ground
+  - Item
   layers:
   - Default
   - TransparentFX
