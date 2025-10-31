@@ -16,6 +16,14 @@ public class PlayerData : MonoBehaviour {
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
     }
 
+    public void Boost(float amount) {
+        Speed *= amount;
+    }
+
+    public void Slow(float amount) {
+        Speed /= amount;
+    }
+
     void Start() {
         CurrentHealth = MaxHealth;
     }
